@@ -1,0 +1,5 @@
+---
+- name: config docker env 
+  hosts: all  
+  roles:
+    - docker_install
