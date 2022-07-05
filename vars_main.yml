@@ -1,0 +1,3 @@
+---
+# vars file for docker_install
+COMPOSE_VER: v1.26.2
