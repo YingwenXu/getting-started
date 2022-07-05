@@ -1,0 +1,41 @@
+- name: stop firewalld 
+  service: 
+    name=firewalld 
+    state=stopped 
+    enabled=no
+    
+- name: disable selinux temporary
+  shell: "setenforce 0"
+  failed_when: false
+- name: permently disable selinux
+  lineinfile:
+    dest: /etc/selinux/config
+    regexp: "^SELINUX="
+    line: "SELINUX=disabled"
+
+- name: add EPEL repo
+  yum: 
+    name: epel-release 
+    state: present
+
+- name: install comman packages
+  yum:
+    name:
+      - vim
+      - lrzsz
+      - net-tools
+      - wget
+      - curl
+      - bash-completion
+      - rsync
+      - gcc
+      - unzip
+      - git
+    state: latest
+
+- name: update system
+  shell: "yum update -y"
+  ignore_errors: yes
+  args:
+    warn: False
+

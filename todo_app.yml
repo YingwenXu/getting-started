@@ -1,0 +1,13 @@
+---
+- name: pull getting-started form my hub
+  shell: "docker pull xuyingwen/getting-started"
+- name: copy app folder to remote nodes
+  unarchive:
+    src: /home/ywxu/ansible/app.tar
+    dest: /root
+- name: Copy docker-compose file to app folder
+  copy:
+    src: /root/getting-started-master/app/docker-compose.yml
+    dest: /root/app
+- name: run docker-compose
+  shell: 'cd /root/app/ && docker-compose up -d'

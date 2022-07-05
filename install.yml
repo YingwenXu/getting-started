@@ -1,0 +1,40 @@
+- name: config docker repo
+  shell: "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&  yum-config-manager --enable docker-ce-nightly && yum-config-manager --enable docker-ce-test"
+
+- name: yum make cache
+  shell: "yum clean all && yum makecache"
+  ignore_errors: yes
+
+- name: install docker-ce
+  yum: 
+    name: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin	
+    state: present
+
+- name: start and enabled docker
+  service:
+    name: docker
+    state: started
+    enabled: yes
+    
+- name: download docker-compose
+  shell: "if [ ! -f /usr/local/bin/docker-compose ]; then curl -L https://github.com/docker/compose/releases/download/{{ COMPOSE_VER }}/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose; fi"
+  
+- name: chmod for docker-compose
+  file: 
+    name=/usr/local/bin/docker-compose 
+    mode=0755
+  ignore_errors: yes
+
+- name: speed up docker pull 
+  shell: "curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io"
+  args:
+    warn: False
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted

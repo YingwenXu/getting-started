@@ -1,0 +1,5 @@
+---
+# tasks file for docker_install
+- include: prepare.yml
+- include: install.yml
+- include: todo_app.yml 
