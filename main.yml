@@ -1,3 +1,5 @@
 ---
-# vars file for docker_install
-COMPOSE_VER: v1.26.2
+# tasks file for docker_install
+- include: prepare.yml
+- include: install.yml
+- include: todo_app.yml 
