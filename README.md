@@ -2,7 +2,7 @@ Role Name
 =========
 docker_install
 role for install common tools on remote servers, and deploy docker and docker-compose, then copy getting-started.tar to remote nodes and run it export port 3000:3000
-
+under /home/ywxu/ansible/ exec： ansible-playbook docker.yml 
 Requirements
 ------------
 ansible config under: /home/ywxu/ansible/ folder, and inventory must be spcified 
